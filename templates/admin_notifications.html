@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Notifications</title>
+  <link rel="stylesheet" href="/static/admin_dashboardstyle.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    .page-title {
+      text-align: center;
+      padding: 30px;
+      font-size: 28px;
+      color: #2c3e50;
+    }
+
+    .notif-container {
+      width: 80%;
+      margin: 0 auto 50px auto;
+    }
+
+    .notif-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border-left: 5px solid #e6a817;
+      background: #fff3cd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .notif-card.read {
+      background: #f9f9f9;
+      border-left: 5px solid #ccc;
+    }
+
+    .notif-icon { font-size: 22px; }
+
+    .notif-text { flex: 1; }
+
+    .notif-text p {
+      margin: 0 0 5px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .notif-text span {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .unread-badge {
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .mark-btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 20px auto;
+      padding: 10px 25px;
+      background: #2c3e50;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .mark-btn:hover { opacity: 0.85; }
+
+    .back-btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 20px auto;
+      padding: 10px 25px;
+      background: #1abc9c;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .back-btn:hover { opacity: 0.85; }
+
+    .no-notif {
+      text-align: center;
+      color: #888;
+      padding: 40px;
+      font-size: 16px;
+    }
+
+    /* ✅ RESPONSIVE DESIGN */
+
+    @media (max-width: 768px) {
+      .notif-container {
+        width: 95%;
+      }
+
+      .page-title {
+        font-size: 24px;
+        padding: 20px;
+      }
+
+      .notif-card {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .notif-container {
+        width: 95%;
+      }
+
+      .page-title {
+        font-size: 20px;
+        padding: 15px;
+      }
+
+      .notif-card {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .notif-text p {
+        font-size: 13px;
+      }
+
+      .notif-text span {
+        font-size: 11px;
+      }
+
+      .mark-btn,
+      .back-btn {
+        width: 90%;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .unread-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <h2>SNIST</h2>
+    <nav>
+      <a href="/admin_dashboard">Home</a>
+      <a href="/total_complaints">Total Complaints</a>
+      <a href="/completed_complaints">Completed Complaints</a>
+      <a href="/pending_complaints">Pending Complaints</a>
+      <a href="#">Contact</a>
+      <a href="/admin_notifications" style="position: relative; margin-left: 20px;">
+        🔔
+        {% if unread_count > 0 %}
+        <span class="unread-badge">{{ unread_count }}</span>
+        {% endif %}
+      </a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <h2 class="page-title">🔔 Admin Notifications</h2>
+
+  <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+    <a href="/mark_admin_read" class="mark-btn">✅ Mark All as Read</a>
+    <a href="/admin_dashboard" class="back-btn">← Back to Dashboard</a>
+  </div>
+
+  <div class="notif-container">
+    {% if all_notifications %}
+      {% for n in all_notifications %}
+      <div class="notif-card {% if n[3] == 1 %}read{% endif %}">
+        <div class="notif-icon">
+          {% if n[3] == 0 %}🔴{% else %}✅{% endif %}
+        </div>
+        <div class="notif-text">
+          <p>{{ n[2] }}</p>
+          <span>{{ n[4] }}</span>
+        </div>
+        {% if n[3] == 0 %}
+        <span class="unread-badge">New</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-notif">No notifications yet.</p>
+    {% endif %}
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 SNIST | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>

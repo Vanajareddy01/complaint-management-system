@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Complaints</title>
+  <link rel="stylesheet" href="/static/admin_dashboardstyle.css">
+
+  <style>
+    /* ✅ RESPONSIVE DESIGN ONLY */
+    @media (max-width: 1024px) {
+      .complaints-table {
+        width: 95%;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .complaints-table thead {
+        display: none;
+      }
+
+      .complaints-table, 
+      .complaints-table tbody, 
+      .complaints-table tr, 
+      .complaints-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .complaints-table tr {
+        margin-bottom: 20px;
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      .complaints-table td {
+        text-align: left;
+        padding: 8px 10px;
+        position: relative;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .complaints-table td:last-child {
+        border-bottom: none;
+      }
+
+      .complaints-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 3px;
+        color: #2c3e50;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 22px !important;
+      }
+
+      .complaints-table td {
+        font-size: 13px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <header class="navbar">
+    <h2>SNIST</h2>
+    <nav>
+      <a href="/admin_dashboard">Home</a>
+      <a href="/completed_complaints">Completed Complaints</a>
+      <a href="/pending_complaints">Pending Complaints</a>
+      <a href="#">Contact</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <h2 style="text-align:center; padding:30px; color:#2c3e50;">Completed Complaints</h2>
+
+  {% if complaints %}
+  <table class="complaints-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Mail ID</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in complaints %}
+      <tr>
+        <td data-label="#"> {{ loop.index }}</td>
+        <td data-label="Mail ID"> {{ c[9] }}</td>
+        <td data-label="Category"> {{ c[7] }}</td>
+        <td data-label="Title"> {{ c[2] }}</td>
+        <td data-label="Description"> {{ c[3] }}</td>
+        <td data-label="Status"><span class="status-resolved">{{ c[4] }}</span></td>
+        <td data-label="Date"> {{ c[5] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="text-align:center; color:#888; padding:40px;">No completed complaints yet.</p>
+  {% endif %}
+
+  <footer class="footer">
+    <p>© 2026 SNIST | All Rights Reserved</p>
+  </footer>
+
+</body> 
+</html>

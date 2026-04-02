@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <link rel="stylesheet" href="/static/registerstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <h2>Create Account</h2>
+
+        <form method="POST" action="/register" autocomplete="off">
+
+            <!-- Username -->
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <!-- Email -->
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <!-- ✅ ROLE FIELD ADDED -->
+            <div class="input-group">
+                <label>Role</label>
+                <select name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group password-group">
+                <label>Password</label>
+                <input type="password" id="password" name="password" required oninput="syncEye(this)">
+                <span class="toggle-eye" onclick="togglePassword(this)">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="input-group password-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required oninput="syncEye(this)">
+                <span class="toggle-eye" onclick="togglePassword(this)">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </span>
+            </div>
+
+            <button type="submit">Register</button>
+
+            <div class="login-link">
+                <p>Do you already have an account? 
+                    <a href="/login">Login</a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+function togglePassword(iconContainer) {
+    const input = iconContainer.parentElement.querySelector("input");
+    const icon = iconContainer.querySelector("i");
+
+    input.type = input.type === "password" ? "text" : "password";
+
+    icon.className = input.type === "text"
+        ? "fa-solid fa-eye"
+        : "fa-solid fa-eye-slash";
+}
+
+function syncEye(input) {
+    const icon = input.parentElement.querySelector("i");
+
+    icon.className = input.type === "text"
+        ? "fa-solid fa-eye"
+        : "fa-solid fa-eye-slash";
+}
+</script>
+
+</body>
+</html>

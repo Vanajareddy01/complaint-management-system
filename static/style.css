@@ -1,0 +1,66 @@
+/* CENTER CONTENT PROPERLY */
+.content {
+    margin-left: 240px;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* CARD CENTER */
+.card {
+    width: 80%;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* TABLE IMPROVED */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background: #4facfe;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* HOVER EFFECT */
+tr:hover {
+    background: #f1f1f1;
+}
+
+/* SIDEBAR IMPROVE */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #1e1e2f;
+    color: white;
+    padding: 20px;
+    position: fixed;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    background: #2c2c3e;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #4facfe;
+}

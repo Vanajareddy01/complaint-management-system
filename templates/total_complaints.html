@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Total Complaints</title>
+  <link rel="stylesheet" href="/static/admin_dashboardstyle.css">
+  <style>
+    .page-title {
+      text-align: center;
+      padding: 30px;
+      font-size: 28px;
+      color: #2c3e50;
+    }
+    .complaints-table {
+      width: 95%;
+      margin: 20px auto 40px auto;
+      border-collapse: collapse;
+    }
+    .complaints-table th {
+      background: #2c3e50;
+      color: white;
+      padding: 12px 15px;
+      text-align: left;
+    }
+    .complaints-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+    .complaints-table tr:hover { background: #f5f5f5; }
+    .status-pending  { color: #e6a817; font-weight: bold; }
+    .status-resolved { color: #4a7c2f; font-weight: bold; }
+    .status-rejected { color: #e74c3c; font-weight: bold; }
+    .no-complaints {
+      text-align: center;
+      padding: 40px;
+      color: #888;
+      font-size: 16px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 24px;
+        padding: 20px;
+      }
+
+      .complaints-table th,
+      .complaints-table td {
+        padding: 10px;
+        font-size: 13px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+
+      /* Navbar fix */
+      .navbar {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .navbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .navbar nav a {
+        font-size: 12px;
+      }
+
+      /* Table scroll */
+      .complaints-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      .complaints-table th,
+      .complaints-table td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      /* Buttons stack clean */
+      .complaints-table td div {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .page-title {
+        font-size: 20px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <h2>SNIST</h2>
+    <nav>
+      <a href="/admin_dashboard">Home</a>
+      <a href="/total_complaints">Total Complaints</a>
+      <a href="/completed_complaints">Completed Complaints</a>
+      <a href="/pending_complaints">Pending Complaints</a>
+      <a href="#">Contact</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <h2 class="page-title">Total Complaints</h2>
+
+  {% if complaints %}
+  <table class="complaints-table">
+    <thead>
+      <tr>
+        <th>Complaint ID</th>
+        <th>Mail ID</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in complaints %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ c[9] }}</td>
+        <td>{{ c[7] }}</td>
+        <td>{{ c[2] }}</td>
+        <td>{{ c[3] }}</td>
+        <td>{{ c[5] }}</td>
+        <td>
+          <span class="status-{{ c[4]|lower }}">{{ c[4] }}</span>
+        </td>
+        <td>
+          <div style="display: flex; flex-direction: column; gap: 5px; width: fit-content;">
+            {% if c[4] != 'Resolved' %}
+            <a href="/update/{{ c[0] }}/Resolved" class="btn-resolve">Resolve</a>
+            {% endif %}
+            {% if c[4] != 'Pending' %}
+            <a href="/update/{{ c[0] }}/Pending" class="btn-pending">Pending</a>
+            {% endif %}
+            {% if c[4] != 'Rejected' %}
+            <a href="/update/{{ c[0] }}/Rejected" class="btn-reject">Reject</a>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="no-complaints">No complaints found.</p>
+  {% endif %}
+
+  <footer class="footer">
+    <p>© 2026 SNIST | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>

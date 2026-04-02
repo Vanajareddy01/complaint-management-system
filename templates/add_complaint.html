@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Complaint</title>
+  <link rel="stylesheet" href="/static/student_dashboardstyle.css">
+  <style>
+    .form-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .form-container h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #f5f5f5;
+      font-size: 14px;
+      color: #333;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .form-group textarea {
+      resize: vertical;
+      height: 120px;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+    .success-msg {
+      background: #d4edda;
+      color: #155724;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #2c3e50;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <h2>SNIST</h2>
+    <nav>
+      <a href="/student_dashboard">Home</a>
+      <a href="/my_complaints">My Complaints</a>
+      <a href="/add_complaint">Add Complaint</a>
+      <a href="#">Contact</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="form-container">
+    <h2>Add New Complaint</h2>
+
+    {% if success %}
+    <div class="success-msg">✅ Complaint submitted successfully!</div>
+    {% endif %}
+
+    <form method="POST" action="/add_complaint">
+
+      <div class="form-group">
+        <label>Complaint Title</label>
+        <input type="text" name="title" placeholder="Enter complaint title" required>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category" required>
+          <option value="">Select Category</option>
+          <option value="Academic">Academic</option>
+          <option value="Hostel">Hostel</option>
+          <option value="Transport">Transport</option>
+          <option value="Canteen">Canteen</option>
+          <option value="Infrastructure">Infrastructure</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" placeholder="Describe your complaint in detail..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Complaint</button>
+
+    </form>
+
+    <a href="/my_complaints" class="back-link">← View My Complaints</a>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 SNIST | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>

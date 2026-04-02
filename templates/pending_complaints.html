@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pending Complaints</title>
+  <link rel="stylesheet" href="/static/admin_dashboardstyle.css">
+
+  <style>
+    /* ================= RESPONSIVE ================= */
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 24px;
+        padding: 20px !important;
+      }
+
+      .complaints-table th,
+      .complaints-table td {
+        padding: 10px;
+        font-size: 13px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+
+      /* ✅ Make table scrollable */
+      .complaints-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      .complaints-table th,
+      .complaints-table td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      /* ✅ Stack buttons nicely */
+      .complaints-table td div {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      /* Navbar responsive */
+      .navbar {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .navbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .navbar nav a {
+        font-size: 12px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <header class="navbar">
+    <h2>SNIST</h2>
+    <nav>
+      <a href="/admin_dashboard">Home</a>
+      <a href="/total_complaints">Total Complaints</a>
+      <a href="/completed_complaints">Completed Complaints</a>
+      <a href="/pending_complaints">Pending Complaints</a>
+      <a href="#">Contact</a>
+      <a href="/admin_notifications" style="position: relative; margin-left: 20px;">
+        🔔
+      </a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <h2 style="text-align:center; padding:30px; color:#2c3e50;">Pending Complaints</h2>
+
+  {% if complaints %}
+  <table class="complaints-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Mail ID</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in complaints %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ c[9] }}</td>
+        <td>{{ c[7] }}</td>
+        <td>{{ c[2] }}</td>
+        <td>{{ c[3] }}</td>
+        <td><span class="status-pending">{{ c[4] }}</span></td>
+        <td>{{ c[5] }}</td>
+        <td>
+          <div style="display: flex; flex-direction: column; gap: 5px; width: fit-content;">
+            <a href="/update/{{ c[0] }}/Resolved" class="btn-resolve">Resolve</a>
+            <a href="/update/{{ c[0] }}/Pending" class="btn-pending">Pending</a>
+            <a href="/update/{{ c[0] }}/Rejected" class="btn-reject">Reject</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="text-align:center; color:#888; padding:40px;">No pending complaints.</p>
+  {% endif %}
+
+  <footer class="footer"><p>© 2026 SNIST | All Rights Reserved</p></footer>
+
+</body>
+</html>

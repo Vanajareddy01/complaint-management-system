@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Complaints</title>
+<link rel="stylesheet" href="/static/student_dashboardstyle.css">
+
+<style>
+.complaints-table {
+    width: 90%;
+    margin: 40px auto;
+    border-collapse: collapse;
+}
+
+.complaints-table th {
+    background: #2c3e50;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.complaints-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.complaints-table tr:hover {
+    background: #f5f5f5;
+}
+
+.status-pending { color: #e6a817; font-weight: bold; }
+.status-resolved { color: #4a7c2f; font-weight: bold; }
+.status-rejected { color: #e74c3c; font-weight: bold; }
+
+.page-title {
+    text-align: center;
+    padding: 30px;
+    font-size: 28px;
+    color: #2c3e50;
+}
+
+.no-complaints {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+.add-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #1abc9c;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.add-btn:hover { opacity: 0.85; }
+
+/* ===================== RESPONSIVE ===================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .complaints-table {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .complaints-table th,
+    .complaints-table td {
+        padding: 10px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        padding: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+    .complaints-table {
+        display: block;
+        overflow-x: auto; /* ✅ horizontal scroll */
+        white-space: nowrap;
+    }
+
+    .complaints-table th,
+    .complaints-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .page-title {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .add-btn {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+    .no-complaints {
+        font-size: 14px;
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+<h2>SNIST</h2>
+<nav>
+<a href="/student_dashboard">Home</a>
+<a href="/my_complaints">My Complaints</a>
+<a href="/add_complaint">Add Complaint</a>
+<a href="#">Contact</a>
+<a href="/logout">Logout</a>
+</nav>
+</header>
+
+<h2 class="page-title">My Complaints</h2>
+
+{% if complaints %}
+<table class="complaints-table">
+
+<thead>
+<tr>
+<th>Complaint ID</th>
+<th>Category</th>
+<th>Title</th>
+<th>Description</th>
+<th>Status</th>
+<th>Date</th>
+<th>Reminder</th>
+<th>Delete</th>
+</tr>
+</thead>
+
+<tbody>
+{% for c in complaints %}
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<!-- ✅ FIXED: c[7]=category -->
+<td>{{ c[7] }}</td>
+
+<!-- ✅ FIXED: c[2]=title -->
+<td>{{ c[2] }}</td>
+
+<!-- ✅ FIXED: c[3]=description -->
+<td>{{ c[3] }}</td>
+
+<!-- ✅ FIXED: c[4]=status -->
+<td>
+<span class="status-{{ c[4]|lower }}">{{ c[4] }}</span>
+</td>
+
+<!-- ✅ FIXED: c[5]=date -->
+<td>{{ c[5] }}</td>
+
+<!-- ✅ REMINDER BUTTON -->
+<td>
+<a href="/reminder/{{c[0]}}" class="add-btn">Remind</a>
+</td>
+
+<!-- ✅ DELETE -->
+<td>
+<a href="/delete/{{c[0]}}"
+   onclick="return confirm('Are you sure you want to delete this complaint?')"
+   style="color:red; font-weight:bold;">
+Delete
+</a>
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+{% else %}
+<p class="no-complaints">No complaints yet. <a href="/add_complaint">Add one now!</a></p>
+{% endif %}
+
+<footer class="footer">
+<p>© 2026 SNIST</p>
+</footer>
+
+</body>
+</html>
